@@ -1,0 +1,16 @@
+<IfModule mod_rewrite.c>
+    Options -Indexes
+    # enable apache rewrite engine
+    RewriteEngine on
+
+    # set your rewrite base
+    # Edit this in your init method too if your script lives in a subfolder
+    # RewriteBase /api/
+
+    # Deliver the folder or file directly if it exists on the server
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Push every request to index.php
+    RewriteRule ^(.*)$ index.php [QSA]
+</IfModule>
