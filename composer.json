@@ -14,5 +14,10 @@
     "require": {
         "steampixel/simple-php-router": "^0.7.0",
         "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "zikju\\": "classes"
+        }
     }
 }

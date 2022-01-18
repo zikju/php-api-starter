@@ -5,13 +5,8 @@ use zikju\Core\Response;
 // Set default timezone
 date_default_timezone_set('Europe/Vilnius');
 
-// Load helpers functions
-require_once (__DIR__ . '/helpers/functions.php');
-
-// Autoload classes from 'classes' dir
-// TODO: Separate classes into folders by namespace
-spl_autoload_register('autoload_class');
-
+// Autoload Composer dependencies and custom classes
+require_once (__DIR__ . '/vendor/autoload.php');
 
 // Validate incoming Request
 if (!Request::isAllowed()) {
@@ -38,9 +33,3 @@ header("Access-Control-Allow-Methods: " . implode(', ', Request::$allowedList));
 header("Access-Control-Allow-Headers: Origin, Content-Type, Authorization, Accept, X-Requested-With, Content-Disposition, RefreshToken");
 header("Access-Control-Max-Age: 60");
 header("Content-Type: application/json; charset=UTF-8");
-
-
-
-
-// Autoload installed Composer dependencies
-require_once (__DIR__ . '/vendor/autoload.php');
