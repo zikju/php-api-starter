@@ -1,5 +1,5 @@
 <?php
-// Initialize 'steampixel/simple-php-router' library
+// Use 'steampixel/simple-php-router' library
 use Steampixel\Route;
 
 
@@ -20,4 +20,5 @@ Route::pathNotFound(function($path) {
 
 
 // Run the router
-Route::run('/php-backend');
+// Route::run('/'); // api scripts are in root folder
+Route::run('/php-backend'); // api scripts are in sub-folder
