@@ -1,6 +1,6 @@
 <?php
 
-namespace zikju\Core;
+namespace zikju\Http;
 
 class Request
 {
