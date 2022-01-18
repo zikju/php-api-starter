@@ -14,6 +14,7 @@
     "require": {
         "steampixel/simple-php-router": "^0.7.0",
         "vlucas/phpdotenv": "^5.4",
+        "thingengineer/mysqli-database-class": "dev-master",
         "ext-json": "*"
     },
     "autoload": {
