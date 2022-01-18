@@ -25,4 +25,9 @@ class DbConnect
         );
     }
 
+    function __destruct()
+    {
+        $this->db = NULL;
+    }
+
 }
