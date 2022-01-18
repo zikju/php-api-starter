@@ -1,6 +1,7 @@
 <?php
 use zikju\Core\Request;
 use zikju\Core\Response;
+use Dotenv\Dotenv;
 
 // Set default timezone
 date_default_timezone_set('Europe/Vilnius');
@@ -33,3 +34,8 @@ header("Access-Control-Allow-Methods: " . implode(', ', Request::$allowedList));
 header("Access-Control-Allow-Headers: Origin, Content-Type, Authorization, Accept, X-Requested-With, Content-Disposition, RefreshToken");
 header("Access-Control-Max-Age: 60");
 header("Content-Type: application/json; charset=UTF-8");
+
+
+// Load environment variables from .env file to $_ENV
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
