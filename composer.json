@@ -10,9 +10,10 @@
             "homepage": "https://430.lt/"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "steampixel/simple-php-router": "^0.7.0",
+        "vlucas/phpdotenv": "^5.4",
         "ext-json": "*"
     },
     "autoload": {
