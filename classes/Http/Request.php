@@ -10,7 +10,7 @@ class Request
     /** Get incoming request method name
      * @return string
      */
-    public static function get(): string
+    public static function getMethod(): string
     {
         return strtoupper($_SERVER["REQUEST_METHOD"]);
     }
@@ -22,7 +22,7 @@ class Request
     public static function isAllowed(): bool
     {
         return (in_array(
-            Request::get(),
+            Request::getMethod(),
             Request::$allowedList
         ));
     }
