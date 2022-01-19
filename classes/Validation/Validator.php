@@ -1,11 +1,11 @@
 <?php
 
 
-namespace zikju\Shared\Validators;
+namespace zikju\Shared\Validation;
 
 use Respect\Validation\Validator as v;
 
-class ValidateInput
+class Validator
 {
 
     const ALLOWED_ACCOUNT_ROLES = [
