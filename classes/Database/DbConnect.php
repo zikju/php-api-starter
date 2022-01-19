@@ -27,7 +27,7 @@ class DbConnect
 
     function __destruct()
     {
-        $this->db = NULL;
+        $this->db->disconnect();
     }
 
 }
