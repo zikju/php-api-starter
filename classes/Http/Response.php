@@ -43,7 +43,7 @@ class Response
         $this->responseArray['code'] = $code;
     }
 
-    public function print () {
+    public function send () {
 
         /**
          * For OPTIONS requests - always return '200 OK' code!!!
