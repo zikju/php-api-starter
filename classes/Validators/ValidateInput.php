@@ -30,7 +30,7 @@ class ValidateInput
     {
         return v::email()
                 ->noWhitespace()
-                ->length(6, 320)
+                ->length(6, 120)
                 ->validate($email);
     }
 
