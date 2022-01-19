@@ -64,4 +64,20 @@ class Response
         // print response
         die(json_encode($responseArray));
     }
+
+
+    /**
+     * Handles response output based on mysqli query result
+     *
+     * @param array $queryResult
+     */
+    public static function handleModelResult (array $queryResult)
+    {
+        $status = ($queryResult['success'] === true ? 'ok' : 'error');
+
+        Response::send (
+            $status,
+            $queryResult['message']
+        );
+    }
 }
