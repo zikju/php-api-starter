@@ -4,28 +4,32 @@ namespace zikju\Shared\Http;
 
 class Response
 {
-    protected int $code;
-
-    protected array $responseArray = [];
-
-    public function __construct(
+    /**
+     * @param string $status
+     * @param string $message
+     * @param array $payloadArray
+     * @param int $code
+     */
+    public static function send (
         string $status,
         string $message = '',
         array $payloadArray = [],
         int $code = 0
-    )
-    {
+    ) {
+
+        $responseArray = [];
+
         // Set 'status' (REQUIRED): 'ok' or 'error'
-        $this->responseArray['status'] = $status;
+        $responseArray['status'] = $status;
 
         // Set 'message' if necessary
         if (isset($message) && !empty($message)) {
-            $this->responseArray['message'] = $message;
+            $responseArray['message'] = $message;
         }
 
         // Set 'payload' if necessary
         if (isset($payloadArray) && !empty($payloadArray)) {
-            $this->responseArray['payload'] = $payloadArray;
+            $responseArray['payload'] = $payloadArray;
         }
 
         // If 'code' parameter is empty, then use defaults
@@ -39,11 +43,7 @@ class Response
                     break;
             }
         }
-        $this->code = $code;
-        $this->responseArray['code'] = $code;
-    }
-
-    public function send () {
+        $responseArray['code'] = $code;
 
         /**
          * For OPTIONS requests - always return '200 OK' code!!!
@@ -57,11 +57,11 @@ class Response
         if (Request::getMethod() === "OPTIONS") {
             http_response_code(200);
         } else {
-            http_response_code($this->code);
+            http_response_code($code);
         }
 
 
         // print response
-        echo json_encode($this->responseArray);
+        die(json_encode($responseArray));
     }
 }

@@ -11,11 +11,10 @@ require_once (__DIR__ . '/vendor/autoload.php');
 
 // Validate incoming Request
 if (!Request::isAllowed()) {
-    $response = new Response(
+    Response::send(
         'error',
-        'Request method is invalid');
-    $response->print();
-    die();
+        'REQUEST METHOD IS INVALID'
+    );
 }
 
 
