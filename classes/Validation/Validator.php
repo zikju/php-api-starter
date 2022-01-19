@@ -1,11 +1,11 @@
 <?php
 
 
-namespace zikju\Shared\Validators;
+namespace zikju\Shared\Validation;
 
 use Respect\Validation\Validator as v;
 
-class ValidateInput
+class Validator
 {
 
     const ALLOWED_ACCOUNT_ROLES = [
@@ -20,6 +20,19 @@ class ValidateInput
         'disabled'
     ];
 
+
+    /**
+     * Validate 'id'
+     * @param $id
+     * @return bool
+     */
+    public static function id($id): bool
+    {
+        return v::intVal()
+                ->min(1)
+                ->validate($id);
+    }
+
     /**
      * Validate 'email' input
      *
@@ -30,7 +43,7 @@ class ValidateInput
     {
         return v::email()
                 ->noWhitespace()
-                ->length(6, 320)
+                ->length(6, 120)
                 ->validate($email);
     }
 
