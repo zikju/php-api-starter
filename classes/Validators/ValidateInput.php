@@ -20,6 +20,19 @@ class ValidateInput
         'disabled'
     ];
 
+
+    /**
+     * Validate 'id'
+     * @param $id
+     * @return bool
+     */
+    public static function id($id): bool
+    {
+        return v::intVal()
+                ->min(1)
+                ->validate($id);
+    }
+
     /**
      * Validate 'email' input
      *
