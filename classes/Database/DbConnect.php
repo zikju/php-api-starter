@@ -1,7 +1,7 @@
 <?php
 
 
-namespace zikju\Database;
+namespace zikju\Shared\Database;
 
 
 use MysqliDb;

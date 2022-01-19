@@ -1,6 +1,6 @@
 <?php
-use zikju\Http\Request;
-use zikju\Http\Response;
+use zikju\Shared\Http\Request;
+use zikju\Shared\Http\Response;
 use Dotenv\Dotenv;
 
 // Set default timezone

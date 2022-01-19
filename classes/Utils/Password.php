@@ -1,7 +1,7 @@
 <?php
 
 
-namespace zikju\Utils;
+namespace zikju\Shared\Utils;
 
 
 class Password

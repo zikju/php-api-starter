@@ -1,6 +1,6 @@
 <?php
 
-namespace zikju\Http;
+namespace zikju\Shared\Http;
 
 class Response
 {
@@ -54,7 +54,7 @@ class Response
          * After it gets a proper and valid response from OPTIONS,
          * only then it sends the "real" request.
          * */
-        if (Request::get() === "OPTIONS") {
+        if (Request::getMethod() === "OPTIONS") {
             http_response_code(200);
         } else {
             http_response_code($this->code);
