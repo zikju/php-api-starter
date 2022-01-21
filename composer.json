@@ -21,7 +21,7 @@
     "autoload": {
         "psr-4": {
             "zikju\\Shared\\": "classes",
-            "zikju\\Endpoints\\": "src"
+            "zikju\\Endpoint\\": "src"
         }
     }
 }

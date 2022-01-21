@@ -1,15 +1,34 @@
 <?php
-// Use 'steampixel/simple-php-router' library
-use Steampixel\Route;
+use Steampixel\Route; // Use 'steampixel/simple-php-router' library
+use zikju\Endpoint\User\UserController;
 
 
-// TEST ROUTE
-Route::add('/test', function() {
-    require __DIR__ . '/src/test.php';
+/** **************************************** **
+ * [USERS] ENDPOINT
+ */
+
+// Create user
+Route::add('/users', function() {
+    (new UserController())->createUser();
+}, 'post');
+
+// Get user by id
+Route::add('/users/([0-9]*)', function($id) {
+    (new UserController())->getUser($id);
 }, 'get');
 
+// Delete user
+Route::add('/users/([0-9]*)', function($id) {
+    (new UserController())->deleteUser($id);
+}, 'delete');
 
-// 404 NOT FOUND ROUTE
+/**
+ ** ************************************** **/
+
+
+
+
+/** 404 NOT FOUND ROUTE */
 Route::pathNotFound(function($path) {
     // Do not forget to send a status header back to the client
     // The router will not send any headers by default
@@ -19,6 +38,8 @@ Route::pathNotFound(function($path) {
 });
 
 
-// Run the router
+
+
+/** RUN THE ROUTER */
 // Route::run('/'); // api scripts are in root folder
 Route::run('/php-backend'); // api scripts are in sub-folder
