@@ -13,8 +13,8 @@ class Response
     public static function send (
         string $status,
         string $message = '',
-        array $payloadArray = [],
-        int $code = 0
+        ?array $payloadArray = [],
+        ?int $code = 0
     ) {
 
         $responseArray = [];
@@ -63,21 +63,5 @@ class Response
 
         // print response
         die(json_encode($responseArray));
-    }
-
-
-    /**
-     * Handles response output based on mysqli query result
-     *
-     * @param array $queryResult
-     */
-    public static function handleModelResult (array $queryResult)
-    {
-        $status = ($queryResult['success'] === true ? 'ok' : 'error');
-
-        Response::send (
-            $status,
-            $queryResult['message']
-        );
     }
 }

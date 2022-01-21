@@ -5,6 +5,7 @@ namespace zikju\Shared\Database;
 
 
 use MysqliDb;
+use zikju\Shared\Http\Response;
 
 class DbConnect
 {
@@ -23,6 +24,16 @@ class DbConnect
             $_ENV['DB_DATABASE'],
             $_ENV['DB_PORT']
         );
+    }
+
+    protected function handleMysqlError ()
+    {
+        if ($this->db->getLastErrno() !== 0) {
+            Response::send(
+                'error',
+                'Database error'
+            );
+        }
     }
 
     function __destruct()
