@@ -1,6 +1,3 @@
 <?php
-// Initialize first-place loaders
+// Initialize app
 require __DIR__ .'/../init.php';
-
-// Initialize Routes handler (API endpoints)
-require __DIR__ .'/../router.php';
