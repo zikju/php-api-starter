@@ -16,7 +16,8 @@ class DbConnect extends DbConfig
         $this->db = $this->connect();
     }
 
-    protected function connect () {
+    protected function connect ()
+    {
         return new MysqliDb (
             $this->getHost(),
             $this->getUsername(),
@@ -26,7 +27,8 @@ class DbConnect extends DbConfig
         );
     }
 
-    public function getConnection () {
+    public function getConnection ()
+    {
         return MysqliDb::getInstance();
     }
 
