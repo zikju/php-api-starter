@@ -7,7 +7,7 @@ use zikju\Shared\Http\Request;
 use zikju\Shared\Http\Response;
 use zikju\Shared\Util\Password;
 
-class UserController extends UserValidator
+class UserController extends UserDataHandler
 {
     protected $request_data;
 

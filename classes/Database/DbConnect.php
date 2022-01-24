@@ -5,35 +5,31 @@ namespace zikju\Shared\Database;
 
 
 use MysqliDb;
-use zikju\Shared\Http\Response;
 
-class DbConnect
+class DbConnect extends DbConfig
 {
     protected ?MysqliDb $db;
 
     public function __construct()
     {
+        parent::__construct();
         $this->db = $this->connect();
     }
 
-    protected function connect () {
+    protected function connect ()
+    {
         return new MysqliDb (
-            $_ENV['DB_HOST'],
-            $_ENV['DB_USERNAME'],
-            $_ENV['DB_PASSWORD'],
-            $_ENV['DB_DATABASE'],
-            $_ENV['DB_PORT']
+            $this->getHost(),
+            $this->getUsername(),
+            $this->getPassword(),
+            $this->getDatabase(),
+            $this->getPort()
         );
     }
 
-    protected function handleMysqlError ()
+    public function getConnection ()
     {
-        if ($this->db->getLastErrno() !== 0) {
-            Response::send(
-                'error',
-                'Database error'
-            );
-        }
+        return MysqliDb::getInstance();
     }
 
     function __destruct()

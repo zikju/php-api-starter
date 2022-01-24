@@ -4,6 +4,7 @@ namespace zikju\Endpoint\User;
 
 
 use zikju\Shared\Database\DbConnect;
+use zikju\Shared\Database\DbErrorHandler;
 
 class UserModel extends DbConnect
 {
@@ -11,7 +12,7 @@ class UserModel extends DbConnect
 
     protected array $dataset = [];
 
-    // By default, we believe that query result is successful
+    // By default query result is successful
     protected array $queryResult = ['status' => 'ok'];
 
     /**
@@ -34,7 +35,7 @@ class UserModel extends DbConnect
         }
 
         // Handle mysqli errors
-        $this->handleMysqlError();
+        DbErrorHandler::handleMysqlError();
 
         // Success!
         $this->queryResult['message'] = 'User successfully created!';
@@ -55,7 +56,7 @@ class UserModel extends DbConnect
         $userData = $this->db->getOne('users', $fields);
 
         // Handle mysqli errors
-        $this->handleMysqlError();
+        DbErrorHandler::handleMysqlError();
 
 
         // Handle if user not found
@@ -81,10 +82,10 @@ class UserModel extends DbConnect
     {
         // Execute mysqli query
         $this->db->where('id', $this->user_id);
-        $query = $this->db->delete('users');
+        $this->db->delete('users');
 
         // Handle mysqli errors
-        $this->handleMysqlError();
+        DbErrorHandler::handleMysqlError();
 
         // Success!
         $this->queryResult['message'] = 'User successfully deleted';
