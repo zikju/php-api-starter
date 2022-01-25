@@ -1,5 +1,5 @@
 <?php
-require_once 'classes/Init.php';
+require_once __DIR__ .'/classes/Init.php';
 
 // Initialize app
 $app = new \zikju\Shared\Init();
