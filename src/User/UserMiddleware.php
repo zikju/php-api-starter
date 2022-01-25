@@ -24,14 +24,7 @@ class UserMiddleware extends UserModel
     protected function validateUserData (): void
     {
         // Validate 'email'
-        if (!UserValidator::email($this->email)) {
-            Response::send(
-                'error',
-                'INVALID EMAIL'
-            );
-        }
-        // Add 'email' to dataset array
-        $this->dataset['email'] = $this->email;
+        $this->validateUserEmail();
 
         // Validate 'password'
         $this->validateUserPassword();
@@ -55,6 +48,28 @@ class UserMiddleware extends UserModel
         }
     }
 
+
+    /**
+     * Validates User email
+     *
+     */
+    protected function validateUserEmail (): void
+    {
+        // Validate 'email' input
+        if (!UserValidator::email($this->email)) {
+            Response::send (
+                'error',
+                'INVALID EMAIL'
+            );
+        }
+        // Add 'email' to dataset array
+        $this->dataset['email'] = $this->email;
+    }
+
+    /**
+     * Validates User password
+     *
+     */
     protected function validateUserPassword (): void
     {
         // Validate 'password' input
@@ -73,7 +88,7 @@ class UserMiddleware extends UserModel
      * Validates User ID
      *
      */
-    protected function validateUserID ()
+    protected function validateUserID (): void
     {
         // Validate 'id'
         if (!UserValidator::id($this->user_id)) {
