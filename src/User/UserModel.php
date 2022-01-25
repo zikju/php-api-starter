@@ -52,6 +52,24 @@ class UserModel
 
 
     /**
+     * Updates Users data in database
+     *
+     */
+    protected function updateUserDataInDB (): void
+    {
+        // Execute mysqli query
+        $this->db->where ('id', $this->user_id);
+        $this->db->update ('users', $this->dataset);
+
+        // Handle mysqli errors
+        DbErrorHandler::handleMysqlError();
+
+        // Success!
+        $this->queryResult['message'] = 'User data successfully updated!';
+    }
+
+
+    /**
      * Gets User data by ID from database
      *
      * @throws \Exception

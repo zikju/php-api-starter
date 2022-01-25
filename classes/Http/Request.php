@@ -111,7 +111,14 @@ class Request
             return $_GET;
         }
 
-        if(!empty($_POST)) {
+        // 'PUT' method
+        if ($method === 'PUT') {
+            parse_str(file_get_contents('php://input'), $put_data);
+            return $put_data;
+        }
+
+        // 'POST' method
+        if($method === 'POST' && !empty($_POST)) {
             // when using 'application/x-www-form-urlencoded' or 'multipart/form-data'
             // as the HTTP Content-Type in the request.
             // NOTE: if this is the case and $_POST is empty,

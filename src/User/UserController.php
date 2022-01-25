@@ -34,11 +34,19 @@ class UserController extends UserMiddleware
         $this->status = $this->request_data['status'];
         $this->notes = $this->request_data['notes'];
 
-        // Validate data
-        $this->validateUserData();
+        // Validate 'email'
+        $this->validateUserEmail($this->email);
+        // Add 'email' to dataset array
+        $this->dataset['email'] = $this->email;
 
-        // Hash password
+        // Validate 'password'
+        $this->validateUserPassword();
+
+        // Hash password and add to dataset array
         $this->dataset['password'] = Password::hash($this->password);
+
+        // Validate and add to dataset array other optional data
+        $this->validateUserCoreData();
 
         // Insert new user into database
         $this->insertUserIntoDB();
@@ -48,6 +56,38 @@ class UserController extends UserMiddleware
             $this->queryResult['status'],
             $this->queryResult['message']
         );
+    }
+
+
+    /**
+     * Edits user Core data (role, account status, notes...)
+     *
+     * @param int $id
+     */
+    public function editUserCoreData (int $id): void
+    {
+        // Set user
+        $this->user_id = $id;
+        $this->validateUserID();
+
+        // Set properties to update
+        $this->role = $this->request_data['role'];
+        $this->status = $this->request_data['status'];
+        $this->notes = $this->request_data['notes'];
+
+        // Validate and add to dataset array other optional data
+        $this->validateUserCoreData();
+
+        if(!empty($this->dataset)) {
+            // Update user data in database
+            $this->updateUserDataInDB();
+
+            // Send response result
+            Response::send(
+                $this->queryResult['status'],
+                $this->queryResult['message']
+            );
+        }
     }
 
 
@@ -74,9 +114,6 @@ class UserController extends UserMiddleware
             $this->queryResult['payload']
         );
     }
-
-
-    // TODO: Create method to edit user data
 
 
     /**

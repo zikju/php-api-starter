@@ -5,7 +5,7 @@ namespace zikju\Endpoint\User;
 
 
 use zikju\Shared\Http\Response;
-use zikju\Shared\Validation\Validator;
+use zikju\Shared\Validation\UserValidator;
 
 class UserMiddleware extends UserModel
 {
@@ -18,54 +18,60 @@ class UserMiddleware extends UserModel
 
 
     /**
-     * Validates request data from client
+     * Validates User Core data
      *
      */
-    protected function validateUserData (): void
+    protected function validateUserCoreData (): void
     {
-        // Validate 'email'
-        if (!Validator::email($this->email)) {
-            Response::send(
-                'error',
-                'INVALID EMAIL'
-            );
-        }
-        // Add 'email' to dataset array
-        $this->dataset['email'] = $this->email;
-
-        // Validate 'password'
-        $this->validateUserPassword();
-
         // Validate 'role'
-        if(Validator::role($this->role)) {
+        if(UserValidator::role($this->role)) {
             // Add 'role' to dataset array
             $this->dataset['role'] = $this->role;
         }
 
         // Validate 'status'
-        if(Validator::status($this->status)) {
+        if(UserValidator::status($this->status)) {
             // Add 'status' to dataset array
             $this->dataset['status'] = $this->status;
         }
 
         // Validate 'notes'
-        if(Validator::text($this->notes)) {
+        if(UserValidator::text($this->notes)) {
             // Add 'notes' to dataset array
             $this->dataset['notes'] = $this->notes;
         }
     }
 
+
+    /**
+     * Validates User email
+     *
+     * @param string $email
+     */
+    protected function validateUserEmail (string $email): void
+    {
+        // Validate 'email' input
+        if (!UserValidator::email($email)) {
+            Response::send (
+                'error',
+                'INVALID EMAIL'
+            );
+        }
+    }
+
+    /**
+     * Validates User password
+     *
+     */
     protected function validateUserPassword (): void
     {
         // Validate 'password' input
-        if (!Validator::password($this->password)) {
+        if (!UserValidator::password($this->password)) {
             Response::send (
                 'error',
                 'INVALID PASSWORD'
             );
         }
-        // Add 'password' to dataset array
-        $this->dataset['password'] = $this->password;
     }
 
 
@@ -73,10 +79,10 @@ class UserMiddleware extends UserModel
      * Validates User ID
      *
      */
-    protected function validateUserID ()
+    protected function validateUserID (): void
     {
         // Validate 'id'
-        if (!Validator::id($this->user_id)) {
+        if (!UserValidator::id($this->user_id)) {
             Response::send (
                 'error',
                 'INVALID ID'
