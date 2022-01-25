@@ -7,7 +7,7 @@ namespace zikju\Endpoint\User;
 use zikju\Shared\Http\Response;
 use zikju\Shared\Validation\Validator;
 
-class UserDataHandler extends UserModel
+class UserMiddleware extends UserModel
 {
     // Properties for User Creation
     protected string $email;
