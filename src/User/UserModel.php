@@ -6,7 +6,7 @@ namespace zikju\Endpoint\User;
 use zikju\Shared\Database\DbConnect;
 use zikju\Shared\Database\DbErrorHandler;
 
-class UserModel extends DbConnect
+class UserModel
 {
     protected int $user_id;
 
@@ -14,6 +14,15 @@ class UserModel extends DbConnect
 
     // By default query result is successful
     protected array $queryResult = ['status' => 'ok'];
+
+    private \MysqliDb $db;
+
+    function __construct()
+    {
+        // Create Database connection
+        $this->db = DbConnect::connect();
+    }
+
 
     /**
      * Inserts new User into database
@@ -40,6 +49,7 @@ class UserModel extends DbConnect
         // Success!
         $this->queryResult['message'] = 'User successfully created!';
     }
+
 
     /**
      * Gets User data by ID from database
@@ -72,6 +82,7 @@ class UserModel extends DbConnect
         $this->queryResult['message'] = 'User data successfully fetched';
         $this->queryResult['payload'] = $userData;
     }
+
 
     /**
      * Deletes user by ID from database

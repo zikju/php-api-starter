@@ -3,6 +3,12 @@ use Steampixel\Route; // Use 'steampixel/simple-php-router' library
 use zikju\Endpoint\User\UserController;
 
 
+// TEST
+Route::add('/test', function() {
+    (new \zikju\Endpoint\Test())->geet();
+}, 'get');
+
+
 /** **************************************** **
  * [USERS] ENDPOINT
  */

@@ -1,40 +1,49 @@
 <?php
-
+declare(strict_types=1);
 
 namespace zikju\Shared\Database;
 
 
 use MysqliDb;
 
-class DbConnect extends DbConfig
+class DbConnect
 {
-    protected ?MysqliDb $db;
 
-    public function __construct()
-    {
-        parent::__construct();
-        $this->db = $this->connect();
-    }
-
-    protected function connect ()
+    public static function connect ()
     {
         return new MysqliDb (
-            $this->getHost(),
-            $this->getUsername(),
-            $this->getPassword(),
-            $this->getDatabase(),
-            $this->getPort()
+            self::getHost(),
+            self::getUsername(),
+            self::getPassword(),
+            self::getDatabase(),
+            self::getPort()
         );
     }
 
-    public function getConnection ()
+
+    public static function getHost(): string
     {
-        return MysqliDb::getInstance();
+        return $_ENV['DB_HOST'];
     }
 
-    function __destruct()
+    public static function getPort(): string
     {
-        $this->db->disconnect();
+        return $_ENV['DB_PORT'];
+    }
+
+    public static function getUsername(): string
+    {
+        return $_ENV['DB_USERNAME'];
+    }
+
+    public static function getPassword(): string
+    {
+        return $_ENV['DB_PASSWORD'];
+    }
+
+    public static function getDatabase(): string
+    {
+        return $_ENV['DB_DATABASE'];
     }
 
 }
