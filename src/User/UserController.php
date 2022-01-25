@@ -58,6 +58,38 @@ class UserController extends UserMiddleware
 
 
     /**
+     * Edits user data
+     *
+     * @param int $id
+     */
+    public function editUserData (int $id): void
+    {
+        // Set user
+        $this->user_id = $id;
+        $this->validateUserID();
+
+        // Set properties to update
+        $this->role = $this->request_data['role'];
+        $this->status = $this->request_data['status'];
+        $this->notes = $this->request_data['notes'];
+
+        // Validate data
+        $this->validateUserOptionalData();
+
+        if(!empty($this->dataset)) {
+            // Update user data in database
+            $this->updateUserDataInDB();
+
+            // Send response result
+            Response::send(
+                $this->queryResult['status'],
+                $this->queryResult['message']
+            );
+        }
+    }
+
+
+    /**
      * Gets User data
      *
      * @param int $id
