@@ -60,38 +60,6 @@ class UserController extends UserMiddleware
 
 
     /**
-     * Edits user Core data (role, account status, notes...)
-     *
-     * @param int $id
-     */
-    public function editUserCoreData (int $id): void
-    {
-        // Set user
-        $this->user_id = $id;
-        $this->validateUserID();
-
-        // Set properties to update
-        $this->role = $this->request_data['role'];
-        $this->status = $this->request_data['status'];
-        $this->notes = $this->request_data['notes'];
-
-        // Validate and add to dataset array other optional data
-        $this->validateUserCoreData();
-
-        if(!empty($this->dataset)) {
-            // Update user data in database
-            $this->updateUserDataInDB();
-
-            // Send response result
-            Response::send(
-                $this->queryResult['status'],
-                $this->queryResult['message']
-            );
-        }
-    }
-
-
-    /**
      * Gets User data
      *
      * @param int $id
@@ -138,4 +106,66 @@ class UserController extends UserMiddleware
         );
     }
 
+
+    /**
+     * Updates user Core data (role, account status, notes...)
+     *
+     * @param int $id
+     */
+    public function editUserCoreData (int $id): void
+    {
+        // Set user
+        $this->user_id = $id;
+        $this->validateUserID();
+
+        // Set properties to update
+        $this->role = $this->request_data['role'];
+        $this->status = $this->request_data['status'];
+        $this->notes = $this->request_data['notes'];
+
+        // Validate and add to dataset array other optional data
+        $this->validateUserCoreData();
+
+        if(!empty($this->dataset)) {
+            // Update user data in database
+            $this->updateUserDataInDB();
+
+            // Send response result
+            Response::send(
+                $this->queryResult['status'],
+                $this->queryResult['message']
+            );
+        }
+    }
+
+
+    /**
+     * Updates User email
+     *
+     * @param int $id
+     * @throws \Exception
+     */
+    public function editUserEmail (int $id)
+    {
+        // Set user id
+        $this->user_id = $id;
+        $this->validateUserID();
+
+        // Set properties to update
+        $this->email = $this->request_data['email'];
+
+        // Validate 'email'
+        $this->validateUserEmail($this->email);
+        // Add 'email' to dataset array
+        $this->dataset['email'] = $this->email;
+
+        // Update user email in database
+        $this->updateUserEmailInDB();
+
+        // Send response result
+        Response::send(
+            $this->queryResult['status'],
+            $this->queryResult['message']
+        );
+    }
 }
