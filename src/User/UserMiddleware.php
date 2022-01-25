@@ -18,7 +18,7 @@ class UserMiddleware extends UserModel
 
 
     /**
-     * Validates request data from client
+     * Validates User optional data
      *
      */
     protected function validateUserOptionalData (): void
@@ -46,18 +46,17 @@ class UserMiddleware extends UserModel
     /**
      * Validates User email
      *
+     * @param string $email
      */
-    protected function validateUserEmail (): void
+    protected function validateUserEmail (string $email): void
     {
         // Validate 'email' input
-        if (!UserValidator::email($this->email)) {
+        if (!UserValidator::email($email)) {
             Response::send (
                 'error',
                 'INVALID EMAIL'
             );
         }
-        // Add 'email' to dataset array
-        $this->dataset['email'] = $this->email;
     }
 
     /**
@@ -73,8 +72,6 @@ class UserMiddleware extends UserModel
                 'INVALID PASSWORD'
             );
         }
-        // Add 'password' to dataset array
-        $this->dataset['password'] = $this->password;
     }
 
 

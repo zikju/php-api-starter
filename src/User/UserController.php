@@ -35,15 +35,17 @@ class UserController extends UserMiddleware
         $this->notes = $this->request_data['notes'];
 
         // Validate 'email'
-        $this->validateUserEmail();
+        $this->validateUserEmail($this->email);
+        // Add 'email' to dataset array
+        $this->dataset['email'] = $this->email;
 
         // Validate 'password'
         $this->validateUserPassword();
 
-        // Hash password
+        // Hash password and add to dataset array
         $this->dataset['password'] = Password::hash($this->password);
 
-        // Validate other optional data
+        // Validate and add to dataset array other optional data
         $this->validateUserOptionalData();
 
         // Insert new user into database
@@ -73,7 +75,7 @@ class UserController extends UserMiddleware
         $this->status = $this->request_data['status'];
         $this->notes = $this->request_data['notes'];
 
-        // Validate data
+        // Validate and add to dataset array other optional data
         $this->validateUserOptionalData();
 
         if(!empty($this->dataset)) {
