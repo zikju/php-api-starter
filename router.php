@@ -1,10 +1,6 @@
 <?php
 use Steampixel\Route; // Use 'steampixel/simple-php-router' library
 
-// TEST
-Route::add('/test', function() {
-    (new \zikju\Endpoint\Test())->geet();
-}, 'get');
 
 
 /** **************************************** **
@@ -16,9 +12,10 @@ Route::add('/users', function() {
     (new zikju\Endpoint\User\UserController())->createUser();
 }, 'post');
 
-// Edit user by id
+// Edit user Core data by id
 Route::add('/users/([0-9]*)/edit', function($id) {
-    (new zikju\Endpoint\User\UserController())->editUserData($id);
+    // TODO: check role access
+    (new zikju\Endpoint\User\UserController())->editUserCoreData($id);
 }, 'put');
 
 // Get user by id
@@ -28,6 +25,7 @@ Route::add('/users/([0-9]*)', function($id) {
 
 // Delete user
 Route::add('/users/([0-9]*)', function($id) {
+    // TODO: check role access
     (new zikju\Endpoint\User\UserController())->deleteUser($id);
 }, 'delete');
 

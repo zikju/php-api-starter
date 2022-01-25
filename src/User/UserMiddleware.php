@@ -18,10 +18,10 @@ class UserMiddleware extends UserModel
 
 
     /**
-     * Validates User optional data
+     * Validates User Core data
      *
      */
-    protected function validateUserOptionalData (): void
+    protected function validateUserCoreData (): void
     {
         // Validate 'role'
         if(UserValidator::role($this->role)) {

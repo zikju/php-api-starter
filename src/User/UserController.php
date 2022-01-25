@@ -46,7 +46,7 @@ class UserController extends UserMiddleware
         $this->dataset['password'] = Password::hash($this->password);
 
         // Validate and add to dataset array other optional data
-        $this->validateUserOptionalData();
+        $this->validateUserCoreData();
 
         // Insert new user into database
         $this->insertUserIntoDB();
@@ -60,11 +60,11 @@ class UserController extends UserMiddleware
 
 
     /**
-     * Edits user data
+     * Edits user Core data (role, account status, notes...)
      *
      * @param int $id
      */
-    public function editUserData (int $id): void
+    public function editUserCoreData (int $id): void
     {
         // Set user
         $this->user_id = $id;
@@ -76,7 +76,7 @@ class UserController extends UserMiddleware
         $this->notes = $this->request_data['notes'];
 
         // Validate and add to dataset array other optional data
-        $this->validateUserOptionalData();
+        $this->validateUserCoreData();
 
         if(!empty($this->dataset)) {
             // Update user data in database
