@@ -34,11 +34,17 @@ class UserController extends UserMiddleware
         $this->status = $this->request_data['status'];
         $this->notes = $this->request_data['notes'];
 
-        // Validate data
-        $this->validateUserData();
+        // Validate 'email'
+        $this->validateUserEmail();
+
+        // Validate 'password'
+        $this->validateUserPassword();
 
         // Hash password
         $this->dataset['password'] = Password::hash($this->password);
+
+        // Validate other optional data
+        $this->validateUserOptionalData();
 
         // Insert new user into database
         $this->insertUserIntoDB();
@@ -74,9 +80,6 @@ class UserController extends UserMiddleware
             $this->queryResult['payload']
         );
     }
-
-
-    // TODO: Create method to edit user data
 
 
     /**

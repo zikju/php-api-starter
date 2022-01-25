@@ -21,14 +21,8 @@ class UserMiddleware extends UserModel
      * Validates request data from client
      *
      */
-    protected function validateUserData (): void
+    protected function validateUserOptionalData (): void
     {
-        // Validate 'email'
-        $this->validateUserEmail();
-
-        // Validate 'password'
-        $this->validateUserPassword();
-
         // Validate 'role'
         if(UserValidator::role($this->role)) {
             // Add 'role' to dataset array
