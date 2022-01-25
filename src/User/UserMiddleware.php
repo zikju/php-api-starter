@@ -5,7 +5,7 @@ namespace zikju\Endpoint\User;
 
 
 use zikju\Shared\Http\Response;
-use zikju\Shared\Validation\Validator;
+use zikju\Shared\Validation\UserValidator;
 
 class UserMiddleware extends UserModel
 {
@@ -24,7 +24,7 @@ class UserMiddleware extends UserModel
     protected function validateUserData (): void
     {
         // Validate 'email'
-        if (!Validator::email($this->email)) {
+        if (!UserValidator::email($this->email)) {
             Response::send(
                 'error',
                 'INVALID EMAIL'
@@ -37,19 +37,19 @@ class UserMiddleware extends UserModel
         $this->validateUserPassword();
 
         // Validate 'role'
-        if(Validator::role($this->role)) {
+        if(UserValidator::role($this->role)) {
             // Add 'role' to dataset array
             $this->dataset['role'] = $this->role;
         }
 
         // Validate 'status'
-        if(Validator::status($this->status)) {
+        if(UserValidator::status($this->status)) {
             // Add 'status' to dataset array
             $this->dataset['status'] = $this->status;
         }
 
         // Validate 'notes'
-        if(Validator::text($this->notes)) {
+        if(UserValidator::text($this->notes)) {
             // Add 'notes' to dataset array
             $this->dataset['notes'] = $this->notes;
         }
@@ -58,7 +58,7 @@ class UserMiddleware extends UserModel
     protected function validateUserPassword (): void
     {
         // Validate 'password' input
-        if (!Validator::password($this->password)) {
+        if (!UserValidator::password($this->password)) {
             Response::send (
                 'error',
                 'INVALID PASSWORD'
@@ -76,7 +76,7 @@ class UserMiddleware extends UserModel
     protected function validateUserID ()
     {
         // Validate 'id'
-        if (!Validator::id($this->user_id)) {
+        if (!UserValidator::id($this->user_id)) {
             Response::send (
                 'error',
                 'INVALID ID'
