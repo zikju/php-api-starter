@@ -16,7 +16,8 @@
         "vlucas/phpdotenv": "^5.4",
         "thingengineer/mysqli-database-class": "dev-master",
         "respect/validation": "^2.2",
-        "ext-json": "*"
+        "ext-json": "*",
+        "firebase/php-jwt": "^6.0"
     },
     "autoload": {
         "psr-4": {
