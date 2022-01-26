@@ -64,4 +64,38 @@ class Response
         // print response
         die(json_encode($responseArray));
     }
+
+
+    /**
+     * Send response with status 'ok'
+     *
+     * @param string $message
+     * @param array|null $payloadArray
+     * @param int|null $code
+     */
+    public static function sendOk (
+        string $message = '',
+        ?array $payloadArray = [],
+        ?int $code = 0
+    )
+    {
+        self::send('ok', $message, $payloadArray, $code);
+    }
+
+
+    /**
+     * Send response with status 'error'
+     *
+     * @param string $message
+     * @param array|null $payloadArray
+     * @param int|null $code
+     */
+    public static function sendError (
+        string $message = '',
+        ?array $payloadArray = [],
+        ?int $code = 0
+    )
+    {
+        self::send('error', $message, $payloadArray, $code);
+    }
 }
