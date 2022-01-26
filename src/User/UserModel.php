@@ -52,24 +52,6 @@ class UserModel
 
 
     /**
-     * Updates Users data in database
-     *
-     */
-    protected function updateUserDataInDB (): void
-    {
-        // Execute mysqli query
-        $this->db->where ('id', $this->user_id);
-        $this->db->update ('users', $this->dataset);
-
-        // Handle mysqli errors
-        DbErrorHandler::handleMysqlError();
-
-        // Success!
-        $this->queryResult['message'] = 'User data successfully updated!';
-    }
-
-
-    /**
      * Gets User data by ID from database
      *
      * @throws \Exception
@@ -118,5 +100,51 @@ class UserModel
 
         // Success!
         $this->queryResult['message'] = 'User successfully deleted';
+    }
+
+
+    /**
+     * Updates User data in database
+     *
+     */
+    protected function updateUserDataInDB (): void
+    {
+        // Execute mysqli query
+        $this->db->where ('id', $this->user_id);
+        $this->db->update ('users', $this->dataset);
+
+        // Handle mysqli errors
+        DbErrorHandler::handleMysqlError();
+
+        // Success!
+        $this->queryResult['message'] = 'User data successfully updated!';
+    }
+
+
+    /**
+     * Updates User email in database
+     *
+     * @throws \Exception
+     */
+    protected function updateUserEmailInDB (): void
+    {
+        // Execute mysqli query
+        $this->db->where ('id', $this->user_id);
+        $this->db->update ('users', $this->dataset);
+
+        // Handle if email already exist
+        if ($this->db->getLastErrno() === 1062) {
+            $this->queryResult = [
+                'status' => 'error',
+                'message' => 'EMAIL ALREADY IN USE'
+            ];
+            return;
+        }
+
+        // Handle mysqli errors
+        DbErrorHandler::handleMysqlError();
+
+        // Success!
+        $this->queryResult['message'] = 'User email successfully changed!';
     }
 }
