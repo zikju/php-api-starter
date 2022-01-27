@@ -6,11 +6,18 @@ namespace zikju\Endpoint\User;
 use zikju\Shared\Http\Request;
 use zikju\Shared\Http\Response;
 use zikju\Shared\Util\Password;
+use zikju\Shared\Validation\UserValidator;
 
-class UserController extends UserMiddleware
+class UserController extends UserModel
 {
     protected $request_data;
 
+    // Properties for User Creation
+    protected string $email;
+    protected string $password;
+    protected ?string $role;
+    protected ?string $status;
+    protected ?string $notes;
 
     function __construct()
     {
@@ -35,18 +42,31 @@ class UserController extends UserMiddleware
         $this->notes = $this->request_data['notes'];
 
         // Validate 'email'
-        $this->validateUserEmail($this->email);
-        // Add 'email' to dataset array
+        if (!UserValidator::email($this->email)) {
+            Response::sendError('INVALID EMAIL');
+        }
         $this->dataset['email'] = $this->email;
 
         // Validate 'password'
-        $this->validateUserPassword();
-
-        // Hash password and add to dataset array
+        if (!UserValidator::password($this->password)) {
+            Response::sendError('INVALID PASSWORD');
+        }
         $this->dataset['password'] = Password::hash($this->password);
 
-        // Validate and add to dataset array other optional data
-        $this->validateUserCoreData();
+        // Validate 'role'
+        if(UserValidator::role($this->role)) {
+            $this->dataset['role'] = $this->role;
+        }
+
+        // Validate 'status'
+        if(UserValidator::status($this->status)) {
+            $this->dataset['status'] = $this->status;
+        }
+
+        // Validate 'notes'
+        if(UserValidator::text($this->notes)) {
+            $this->dataset['notes'] = $this->notes;
+        }
 
         // Insert new user into database
         $this->insertUserIntoDB();
@@ -67,10 +87,12 @@ class UserController extends UserMiddleware
      */
     public function getUser (int $id): void
     {
-        // Set user
         $this->user_id = $id;
 
-        $this->validateUserID();
+        // Validate 'id'
+        if (!UserValidator::id($this->user_id)) {
+            Response::sendError('INVALID ID');
+        }
 
         // Get User data from database
         $this->getUserFromDB();
@@ -94,9 +116,12 @@ class UserController extends UserMiddleware
     {
         $this->user_id = $id;
 
-        $this->validateUserID();
+        // Validate 'id'
+        if (!UserValidator::id($this->user_id)) {
+            Response::sendError('INVALID ID');
+        }
 
-        // Insert new user into database
+        // Delete user from database
         $this->deleteUserFromDB();
 
         // Send response result
@@ -114,17 +139,34 @@ class UserController extends UserMiddleware
      */
     public function editUserCoreData (int $id): void
     {
-        // Set user
-        $this->user_id = $id;
-        $this->validateUserID();
-
         // Set properties to update
+        $this->user_id = $id;
         $this->role = $this->request_data['role'];
         $this->status = $this->request_data['status'];
         $this->notes = $this->request_data['notes'];
 
-        // Validate and add to dataset array other optional data
-        $this->validateUserCoreData();
+        // Validate 'id'
+        if (!UserValidator::id($this->user_id)) {
+            Response::sendError('INVALID ID');
+        }
+
+        // Validate 'role'
+        if(UserValidator::role($this->role)) {
+            // Add 'role' to dataset array
+            $this->dataset['role'] = $this->role;
+        }
+
+        // Validate 'status'
+        if(UserValidator::status($this->status)) {
+            // Add 'status' to dataset array
+            $this->dataset['status'] = $this->status;
+        }
+
+        // Validate 'notes'
+        if(UserValidator::text($this->notes)) {
+            // Add 'notes' to dataset array
+            $this->dataset['notes'] = $this->notes;
+        }
 
         if(!empty($this->dataset)) {
             // Update user data in database
@@ -147,16 +189,18 @@ class UserController extends UserMiddleware
      */
     public function editUserEmail (int $id)
     {
-        // Set user id
         $this->user_id = $id;
-        $this->validateUserID();
-
-        // Set properties to update
         $this->email = $this->request_data['email'];
 
+        // Validate 'id'
+        if (!UserValidator::id($this->user_id)) {
+            Response::sendError('INVALID ID');
+        }
+
         // Validate 'email'
-        $this->validateUserEmail($this->email);
-        // Add 'email' to dataset array
+        if (!UserValidator::email($this->email)) {
+            Response::sendError('INVALID EMAIL');
+        }
         $this->dataset['email'] = $this->email;
 
         // Update user email in database
