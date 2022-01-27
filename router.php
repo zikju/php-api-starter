@@ -3,6 +3,17 @@ use Steampixel\Route;
 use zikju\Shared\Http\Response;
 
 
+/**
+ * ---------------------------------------
+ * [AUTH] ENDPOINT
+ * ---------------------------------------
+ */
+// Login
+Route::add('/login', function() {
+    (new zikju\Endpoint\Auth\AuthController())->login();
+}, 'post');
+
+
 
 /**
  * ---------------------------------------
