@@ -6,7 +6,6 @@ namespace zikju\Shared\Util;
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-use Firebase\JWT\ExpiredException;
 
 class JwtToken
 {
@@ -29,17 +28,17 @@ class JwtToken
      */
     public static function create (array $payloadArray, int $expMin = 10): string
     {
-        $finalPayload = [];
+        $tokenPayload = [];
 
         if (!empty($payloadArray)){
-            $finalPayload['payload'] = $payloadArray;
+            $tokenPayload['payload'] = $payloadArray;
         }
 
         // "Expire" timestamp
-        $finalPayload['exp'] = strtotime('+' . $expMin . ' minutes');
+        $tokenPayload['exp'] = strtotime('+' . $expMin . ' minutes');
 
         return JWT::encode(
-            $finalPayload,
+            $tokenPayload,
             $_ENV['JWT_SECRET_KEY'],
             self::$alg
         );
@@ -53,12 +52,12 @@ class JwtToken
      */
     public static function verify (string $token): bool
     {
-        try{
-            $decoded = JWT::decode(
+        try {
+            JWT::decode(
                 $token,
                 new Key($_ENV['JWT_SECRET_KEY'], self::$alg)
             );
-        }catch(ExpiredException $e){
+        } catch (\Exception $e){
             return false;
         }
 
@@ -69,12 +68,12 @@ class JwtToken
     /**
      * Decode JWT token
      * @param string $token
-     * @return array|null
+     * @return array
      */
     public static function decode (string $token)
     {
         if (!self::verify($token)) {
-            return null;
+            return [];
         }
 
         return (array) JWT::decode(

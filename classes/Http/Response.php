@@ -2,6 +2,8 @@
 
 namespace zikju\Shared\Http;
 
+use zikju\Shared\Http\Request\Request;
+
 class Response
 {
     /**
