@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace zikju\Endpoint\Auth;
 
 
-use zikju\Shared\Http\Request;
+use zikju\Shared\Http\Request\Request;
 use zikju\Shared\Http\Response;
 use zikju\Shared\Util\JwtToken;
 use zikju\Shared\Util\Password;
