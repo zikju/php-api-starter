@@ -5,6 +5,8 @@ namespace zikju\Shared\Http\Request;
 
 
 
+use zikju\Shared\Http\Response;
+
 class RequestMethod
 {
     /**
