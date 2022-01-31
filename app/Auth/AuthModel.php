@@ -12,11 +12,9 @@ class AuthModel
 {
     protected string $email;
     protected string $password;
+    protected string $password_hash_from_db;
 
-    protected $userData;
-
-    // By default query result is successful
-    protected array $queryResult = ['status' => 'ok'];
+    protected $userDataFromDB;
 
     // By default query result is with error
     protected string $query_result_status = 'error';
@@ -38,11 +36,11 @@ class AuthModel
     protected function getUserByEmailFromDB ()
     {
         // Set fields to get from database
-        $fields = ['id', 'created_at', 'email', 'password', 'role', 'status', 'notes'];
+        $fields = ['id', 'password', 'role'];
 
         // Execute mysqli query
         $this->db->where('email', $this->email);
-        $this->userData = $this->db->arrayBuilder()->getOne('users', $fields);
+        $this->userDataFromDB = $this->db->arrayBuilder()->getOne('users', $fields);
 
         // Handle mysqli errors
         DbErrorHandler::handleMysqlError();
@@ -54,8 +52,42 @@ class AuthModel
             return;
         }
 
+        $this->password_hash_from_db = $this->userDataFromDB['password'];
+
+        // Remove row with 'password' from userData array
+        unset($this->userDataFromDB['password']);
+
         // Success!
         $this->query_result_status = 'ok';
         $this->query_result_message = 'Email exist!';
+    }
+
+
+    /**
+     * Creates User session in database and returns session details
+     *
+     * @param int $user_id
+     * @param string $token
+     * @param string $expires_at
+     * @param string $ip
+     * @throws \Exception
+     */
+    protected function insertUserSessionIntoDB (
+        int $user_id,
+        string $token,
+        string $expires_at,
+        string $ip
+    )
+    {
+        $fields = array(
+            "u_id"          => $user_id,
+            "refresh_token" => $token,
+            "expires_at"    => $expires_at,
+            "ip"            => $ip
+        );
+        $this->db->insert('users_sessions', $fields);
+
+        // Handle mysqli errors
+        DbErrorHandler::handleMysqlError();
     }
 }
