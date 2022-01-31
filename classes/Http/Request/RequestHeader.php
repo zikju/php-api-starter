@@ -39,11 +39,11 @@ class RequestHeader extends RequestMethod
      * Gets specific header
      *
      * @param string $headerName
-     * @return string|null
+     * @return string
      */
-    public static function getHeader(string $headerName)
+    public static function getHeader(string $headerName): string
     {
-        $headers = null;
+        $headers = '';
         $upperCaseHeaderName = strtoupper(str_replace('-', '_', $headerName));
 
         if (isset($_SERVER[$headerName])) {
@@ -72,9 +72,9 @@ class RequestHeader extends RequestMethod
     /**
      * Gets 'Access Token' from header
      *
-     * @return mixed|null
+     * @return string
      */
-    public static function getAuthorizationHeader()
+    public static function getAuthorizationHeader(): string
     {
         $headers = self::getHeader('Authorization');
 
@@ -84,7 +84,7 @@ class RequestHeader extends RequestMethod
                 return $matches[1];
             }
         }
-        return null;
+        return '';
     }
 
     /**
