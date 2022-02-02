@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-namespace zikju\Endpoint\Auth\Session;
+namespace zikju\Endpoint\Auth;
 
 
 use zikju\Shared\Http\Request;

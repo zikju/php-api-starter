@@ -10,7 +10,6 @@ use zikju\Shared\Http\Response;
 use zikju\Shared\Util\JwtToken;
 use zikju\Shared\Util\Password;
 use zikju\Shared\Validation\UserValidator;
-use zikju\Endpoint\Auth\Session\UserSession;
 
 class LoginController extends LoginModel
 {

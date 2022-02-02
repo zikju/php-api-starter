@@ -2,11 +2,10 @@
 declare(strict_types=1);
 
 
-namespace zikju\Endpoint\Auth\Session;
+namespace zikju\Endpoint\Auth;
 
 use zikju\Shared\Database\DbConnect;
 use zikju\Shared\Database\DbErrorHandler;
-use zikju\Shared\Http\Response;
 
 class UserSessionModel
 {
