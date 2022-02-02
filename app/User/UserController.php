@@ -3,7 +3,7 @@
 namespace zikju\Endpoint\User;
 
 
-use zikju\Shared\Http\Request\Request;
+use zikju\Shared\Http\Request;
 use zikju\Shared\Http\Response;
 use zikju\Shared\Util\Password;
 use zikju\Shared\Validation\UserValidator;
