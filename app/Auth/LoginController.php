@@ -77,16 +77,6 @@ class LoginController extends LoginModel
 
 
     /**
-     * Logout User.
-     */
-    public function logout ()
-    {
-        (new UserSession())->deleteUserSession();
-        Response::sendOk('User successfully logged out');
-    }
-
-
-    /**
      * Validates login Email.
      */
     private function validateLoginEmail ()
