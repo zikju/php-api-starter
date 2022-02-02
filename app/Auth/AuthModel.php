@@ -10,11 +10,12 @@ use zikju\Shared\Database\DbErrorHandler;
 
 class AuthModel
 {
+    protected int $user_id;
     protected string $email;
     protected string $password;
     protected string $password_hash_from_db;
 
-    protected $userDataFromDB;
+    protected ?array $userDataFromDB;
 
     // By default query result is with error
     protected string $query_result_status = 'error';
@@ -52,6 +53,7 @@ class AuthModel
             return;
         }
 
+        $this->user_id = $this->userDataFromDB['id'];
         $this->password_hash_from_db = $this->userDataFromDB['password'];
 
         // Remove row with 'password' from userData array
@@ -60,34 +62,5 @@ class AuthModel
         // Success!
         $this->query_result_status = 'ok';
         $this->query_result_message = 'Email exist!';
-    }
-
-
-    /**
-     * Creates User session in database and returns session details
-     *
-     * @param int $user_id
-     * @param string $token
-     * @param string $expires_at
-     * @param string $ip
-     * @throws \Exception
-     */
-    protected function insertUserSessionIntoDB (
-        int $user_id,
-        string $token,
-        string $expires_at,
-        string $ip
-    )
-    {
-        $fields = array(
-            "u_id"          => $user_id,
-            "refresh_token" => $token,
-            "expires_at"    => $expires_at,
-            "ip"            => $ip
-        );
-        $this->db->insert('users_sessions', $fields);
-
-        // Handle mysqli errors
-        DbErrorHandler::handleMysqlError();
     }
 }
