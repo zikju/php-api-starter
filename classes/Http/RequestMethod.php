@@ -1,11 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace zikju\Shared\Http\Request;
 
+namespace zikju\Shared\Http;
 
-
-use zikju\Shared\Http\Response;
 
 class RequestMethod
 {

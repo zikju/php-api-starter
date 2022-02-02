@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace zikju\Endpoint\Auth\Session;
 
 
-use zikju\Shared\Http\Request\Request;
+use zikju\Shared\Http\Request;
 use zikju\Shared\Http\Response;
 use zikju\Shared\Util\Ip;
 use zikju\Shared\Util\Random;
@@ -68,6 +68,44 @@ class UserSession extends UserSessionModel
         }
     }
 
+
+    /**
+     * Renew (refresh) User session.
+     *
+     * @throws \Exception
+     */
+    public function renewUserSession ()
+    {
+        // Verify if 'Refresh Token' exist in header
+        $this->refresh_token = Request::getRefreshTokenHeader();
+        if (!$this->refresh_token || empty($this->refresh_token)) {
+            Response::sendError('INVALID_REFRESH_TOKEN');
+        }
+
+        // Get current User session from database and backup it to variable
+        $userSession = $this->getFromDB($this->refresh_token);
+        if (!$userSession || empty($userSession)) {
+            Response::sendError('INVALID_REFRESH_TOKEN');
+        }
+
+        // Create array with payload information for JWT access_token
+        $this->user_payload = [
+            'user_id' => $userSession['user_id'],
+            'email' => $userSession['email'],
+            'role' => $userSession['role']
+        ];
+
+        // Delete current User session from database
+        $this->deleteFromDB($this->refresh_token);
+
+        // Verify User session expire datetime
+        if (!$this->verifyExpiryDatetime($userSession['expires_at'])) {
+            Response::sendError('INVALID_REFRESH_TOKEN');
+        }
+
+        // Create new User session
+        $this->createUserSession($userSession['user_id']);
+    }
 
 
     /**

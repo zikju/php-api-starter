@@ -6,7 +6,7 @@ namespace zikju\Shared;
 
 
 use Dotenv\Dotenv;
-use zikju\Shared\Http\Request\Request;
+use zikju\Shared\Http\Request;
 
 final class Init
 {

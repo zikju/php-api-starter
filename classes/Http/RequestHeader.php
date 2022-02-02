@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-namespace zikju\Shared\Http\Request;
+namespace zikju\Shared\Http;
 
 
 class RequestHeader extends RequestMethod
