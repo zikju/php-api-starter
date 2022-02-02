@@ -9,10 +9,19 @@ use zikju\Shared\Http\Response;
  * ---------------------------------------
  */
 // Login
-Route::add('/login', function() {
-    (new zikju\Endpoint\Auth\AuthController())->login();
+Route::add('/auth/login', function() {
+    (new zikju\Endpoint\Auth\LoginController())->login();
 }, 'post');
 
+// Logout
+Route::add('/auth/logout', function() {
+    (new zikju\Endpoint\Auth\LogoutController())->logout();
+}, 'get');
+
+// Refresh Token
+Route::add('/auth/refresh-token', function() {
+    (new zikju\Endpoint\Auth\RefreshTokenController())->refresh();
+}, 'get');
 
 
 /**
