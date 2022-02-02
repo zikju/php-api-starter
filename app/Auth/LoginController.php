@@ -10,14 +10,14 @@ use zikju\Shared\Http\Response;
 use zikju\Shared\Util\JwtToken;
 use zikju\Shared\Util\Password;
 use zikju\Shared\Validation\UserValidator;
-use zikju\Shared\Session\UserSession;
+use zikju\Endpoint\Auth\Session\UserSession;
 
-class LoginController extends AuthModel
+class LoginController extends LoginModel
 {
     protected $request_data;
 
-    protected string $access_token;
-    protected string $refresh_token;
+    protected string $email;
+    protected string $password;
 
     function __construct()
     {
@@ -27,47 +27,83 @@ class LoginController extends AuthModel
         $this->request_data = Request::getData();
     }
 
+
+    /**
+     * Login User.
+     *
+     * @throws \Exception
+     */
     public function login ()
     {
         // Validate login inputs
-        $this->validateLoginInputs();
+        $this->validateLoginEmail();
+        $this->validateLoginPassword();
 
         // Get User data from database
-        $this->getUserByEmailFromDB();
+        $userDataFromDB = $this->getUserDataFromDB($this->email);
 
         // Verify password
         $this->verifyPassword(
             $this->password,
-            $this->password_hash_from_db
+            $userDataFromDB['password']
         );
 
-        // Create User session
-        $this->createUserSession();
 
-        // Create Access Token
-        $this->createAccessToken();
+        // Create Refresh Token (User session)
+        $userSession = new UserSession();
+        $userSession->createUserSession($userDataFromDB['id']);
+        $refresh_token = $userSession->getRefreshToken();
+
+        // Create Access Token (JWT)
+        $token_payload = [
+            'user_id' => $userDataFromDB['id'],
+            'email' => $userDataFromDB['email'],
+            'role' => $userDataFromDB['role']
+        ];
+        $access_token = JwtToken::create($token_payload);
+
 
         // Send response result
         $responseArray = [
-            'access_token' => $this->access_token,
-            'refresh_token' => $this->refresh_token
+            'access_token' => $access_token,
+            'refresh_token' => $refresh_token
         ];
 
-        Response::sendOk('', $responseArray);
+        Response::sendOk(
+            'User successfully logged in',
+            $responseArray
+        );
     }
 
 
     /**
-     * Validates login inputs (email and password).
+     * Logout User.
      */
-    private function validateLoginInputs ()
+    public function logout ()
+    {
+        (new UserSession())->deleteUserSession();
+        Response::sendOk('User successfully logged out');
+    }
+
+
+    /**
+     * Validates login Email.
+     */
+    private function validateLoginEmail ()
     {
         // Validate 'email'
         if (!UserValidator::email($this->request_data['email'])) {
             Response::sendError('INVALID EMAIL');
         }
         $this->email = $this->request_data['email'];
+    }
 
+
+    /**
+     * Validates login Password.
+     */
+    private function validateLoginPassword ()
+    {
         // Validate 'password'
         if (!UserValidator::password($this->request_data['password'])) {
             Response::sendError('INVALID PASSWORD');
@@ -89,36 +125,5 @@ class LoginController extends AuthModel
         {
             Response::sendError('INVALID LOGIN');
         }
-    }
-
-
-    /**
-     * Creates User session.
-     *
-     * @throws \Exception
-     */
-    private function createUserSession ()
-    {
-        $userSession = new UserSession($this->userDataFromDB['id']);
-
-        // Insert User session into database
-        $this->insertUserSessionIntoDB(
-            $this->userDataFromDB['id'],
-            $userSession->getRefreshToken(),
-            $userSession->getExpireDatetime(),
-            $userSession->getIpAddress()
-        );
-
-        $this->refresh_token = $userSession->getRefreshToken();
-    }
-
-
-    /**
-     * Creates Access (JWT) Token.
-     */
-    private function createAccessToken ()
-    {
-        // Create 'access_token' (JWT Token)
-        $this->access_token = JwtToken::create($this->userDataFromDB);
     }
 }
