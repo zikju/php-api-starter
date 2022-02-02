@@ -74,7 +74,7 @@ class UserSession extends UserSessionModel
      *
      * @throws \Exception
      */
-    public function renewUserSession ()
+    public function refreshUserSession ()
     {
         // Verify if 'Refresh Token' exist in header
         $this->refresh_token = Request::getRefreshTokenHeader();
