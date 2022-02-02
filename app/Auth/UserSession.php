@@ -74,7 +74,7 @@ class UserSession extends UserSessionModel
      *
      * @throws \Exception
      */
-    public function renewUserSession ()
+    public function refreshUserSession ()
     {
         // Verify if 'Refresh Token' exist in header
         $this->refresh_token = Request::getRefreshTokenHeader();
@@ -99,7 +99,7 @@ class UserSession extends UserSessionModel
         $this->deleteFromDB($this->refresh_token);
 
         // Verify User session expire datetime
-        if (!$this->verifyExpiryDatetime($userSession['expires_at'])) {
+        if ($this->isTokenExpired($userSession['expires_at'])) {
             Response::sendError('INVALID_REFRESH_TOKEN');
         }
 
@@ -175,13 +175,14 @@ class UserSession extends UserSessionModel
         );
     }
 
+
     /**
      * Check current session expiration
      *
      * @param string $datetime
      * @return bool
      */
-    private function verifyExpiryDatetime (string $datetime): bool
+    private function isTokenExpired (string $datetime): bool
     {
         $expires_timestamp = strtotime($datetime);
         $current_timestamp = time();
