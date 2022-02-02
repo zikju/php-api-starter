@@ -90,7 +90,7 @@ class RequestHeader extends RequestMethod
     /**
      * Gets 'Refresh Token' from header
      *
-     * @return mixed|null
+     * @return string
      */
     public static function getRefreshTokenHeader()
     {
@@ -101,6 +101,6 @@ class RequestHeader extends RequestMethod
             return $headers;
         }
 
-        return null;
+        return '';
     }
 }
