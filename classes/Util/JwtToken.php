@@ -83,4 +83,16 @@ class JwtToken
             )
         );
     }
+
+
+    /**
+     * Returns decoded payload from JWT Token
+     *
+     * @param string $token
+     * @return array
+     */
+    public static function getDecodedPayload (string $token): array
+    {
+        return (array) self::decode($token)['payload'];
+    }
 }
