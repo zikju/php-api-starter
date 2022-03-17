@@ -1,6 +1,6 @@
 <?php
 
-namespace zikju\Endpoint\User;
+namespace zikju\App\User;
 
 
 use zikju\Shared\Http\Request;

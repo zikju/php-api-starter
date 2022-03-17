@@ -10,17 +10,17 @@ use zikju\Shared\Http\Response;
  */
 // Login
 Route::add('/auth/login', function() {
-    (new zikju\Endpoint\Auth\LoginController())->login();
+    (new zikju\App\Auth\LoginController())->login();
 }, 'post');
 
 // Logout
 Route::add('/auth/logout', function() {
-    (new zikju\Endpoint\Auth\LogoutController())->logout();
+    (new zikju\App\Auth\LogoutController())->logout();
 }, 'get');
 
 // Refresh Token
 Route::add('/auth/refresh-token', function() {
-    (new zikju\Endpoint\Auth\RefreshTokenController())->refresh();
+    (new zikju\App\Auth\RefreshTokenController())->refresh();
 }, 'get');
 
 
@@ -30,31 +30,35 @@ Route::add('/auth/refresh-token', function() {
  * ---------------------------------------
  */
 // Create user
-Route::add('/users', function() {
-    (new zikju\Endpoint\User\UserController())->createUser();
+Route::add('/users', function() use ($access) {
+    $access->verifyAccessToken();
+    $access->adminOnly();
+    (new zikju\App\User\UserController())->createUser();
 }, 'post');
 
 // Get user by id
-Route::add('/users/([0-9]*)', function($id) {
-    (new zikju\Endpoint\User\UserController())->getUser($id);
+Route::add('/users/([0-9]*)', function($id) use ($access) {
+    $access->verifyAccessToken();
+    (new zikju\App\User\UserController())->getUser($id);
 }, 'get');
 
 // Delete user
-Route::add('/users/([0-9]*)', function($id) {
-    // TODO: check role access
-    (new zikju\Endpoint\User\UserController())->deleteUser($id);
+Route::add('/users/([0-9]*)', function($id) use ($access) {
+    $access->verifyAccessToken();
+    $access->adminOnly();
+    (new zikju\App\User\UserController())->deleteUser($id);
 }, 'delete');
 
 // Edit user Core data by id
 Route::add('/users/([0-9]*)/edit', function($id) {
     // TODO: check role access
-    (new zikju\Endpoint\User\UserController())->editUserCoreData($id);
+    (new zikju\App\User\UserController())->editUserCoreData($id);
 }, 'put');
 
 // Edit user Email
 Route::add('/users/([0-9]*)/edit/email', function($id) {
     // TODO: check role access
-    (new zikju\Endpoint\User\UserController())->editUserEmail($id);
+    (new zikju\App\User\UserController())->editUserEmail($id);
 }, 'put');
 
 

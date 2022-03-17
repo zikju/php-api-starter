@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-namespace zikju\Endpoint\Auth;
+namespace zikju\App\Auth;
 
 
 use zikju\Shared\Http\Response;
