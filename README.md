@@ -1,13 +1,13 @@
-#php-api-starter
+# php-api-starter
 A starter source code for a handy PHP restful API development.
 Created for OOP practice and personal use.
 
-#Requirements
+# Requirements
 * PHP: >=7.4 
 * MySQL: >=5.7
 * Composer
 
-#Packages used
+# Packages used
 [ThingEngineer/PHP-MySQLi-Database-Class](https://github.com/ThingEngineer/PHP-MySQLi-Database-Class "PHP-MySQLi-Database-Class") <br />
 _MysqliDb is MySQLi wrapper and object mapper with prepared statements._
 
@@ -23,13 +23,13 @@ _A simple library to encode and decode JSON Web Tokens (JWT) in PHP._
 [vlucas/phpdotenv](https://github.com/vlucas/phpdotenv "phpdotenv") <br />
 _Loads environment variables from `.env` to `getenv()`, `$_ENV` and `$_SERVER` automagically._
 
-#Features
+# Features
 * JWT Token Authentication
 * JWT Refresh Tokens
 * Users management
 * More to come...
 
-#Installation
+# Installation
 * Clone repository:<br />
 `git clone https://github.com/zikju/php-api-starter`
 
@@ -57,9 +57,9 @@ Change MySQL logins variables to match your own database settings:
 After file import - find Collection variables and change `API_URL` to your project url.
 
 
-#Endpoints
+# Endpoints
 
-###**Authentication endpoints:**
+### Authentication endpoints:
 
 Method | Endpoint | Parameters | Description
 --- | --- | --- | ---
@@ -68,7 +68,7 @@ Method | Endpoint | Parameters | Description
 `GET` | `/auth/refresh-token` |  | refresh token
 
 
-###**Users endpoints:**
+### Users endpoints:
 
 _All RESTful API endpoints below requires a `Authorization: Bearer xxxx` header set on the HTTP request.<br />
 **xxxx** is replaced with token generated from the `/auth/login` endpoint above._
