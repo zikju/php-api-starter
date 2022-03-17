@@ -1,6 +1,7 @@
 # php-api-starter
-A starter source code for a handy PHP restful API development.
-Created for OOP practice and personal use.
+A starter source code for a handy PHP restful API development.<br />
+
+_This project created mainly for myself - to learn and practice PHP OOP._
 
 # Requirements
 * PHP: >=7.4 
