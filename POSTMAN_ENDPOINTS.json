@@ -15,12 +15,12 @@
 					"urlencoded": [
 						{
 							"key": "email",
-							"value": "username@gmail.com",
+							"value": "zq@zq.lt",
 							"type": "text"
 						},
 						{
 							"key": "password",
-							"value": "pa55word",
+							"value": "gfhjkm",
 							"type": "text"
 						}
 					]
@@ -54,7 +54,18 @@
 				],
 				"body": {
 					"mode": "urlencoded",
-					"urlencoded": []
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "zq@zq.lt",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "gfhjkm",
+							"type": "text"
+						}
+					]
 				},
 				"url": {
 					"raw": "{{API_URL}}/auth/logout",
@@ -85,7 +96,18 @@
 				],
 				"body": {
 					"mode": "urlencoded",
-					"urlencoded": []
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "zq@zq.lt",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "gfhjkm",
+							"type": "text"
+						}
+					]
 				},
 				"url": {
 					"raw": "{{API_URL}}/auth/refresh-token",
@@ -127,6 +149,24 @@
 							"key": "status",
 							"value": "active",
 							"type": "text"
+						},
+						{
+							"key": "role",
+							"value": "admin",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "email",
+							"value": "zq@zq.lt",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "gfhjkm",
+							"type": "text",
+							"disabled": true
 						}
 					]
 				},
@@ -149,7 +189,13 @@
 				"header": [],
 				"body": {
 					"mode": "urlencoded",
-					"urlencoded": []
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "vasja@gmail.com",
+							"type": "text"
+						}
+					]
 				},
 				"url": {
 					"raw": "{{API_URL}}/users/:id",
@@ -163,7 +209,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "1"
+							"value": "22"
 						}
 					]
 				}
@@ -180,7 +226,24 @@
 				"header": [],
 				"body": {
 					"mode": "urlencoded",
-					"urlencoded": []
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "{{$randomEmail}}",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "zq@zq.lt",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "{{$randomPassword}}",
+							"type": "text"
+						}
+					]
 				},
 				"url": {
 					"raw": "{{API_URL}}/users/:id",
@@ -194,7 +257,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "1"
+							"value": "53"
 						}
 					]
 				}
@@ -251,7 +314,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "1"
+							"value": "58"
 						}
 					]
 				}
@@ -268,7 +331,7 @@
 					"urlencoded": [
 						{
 							"key": "email",
-							"value": "someNewName@gmail.com",
+							"value": "vasja@gmail.com",
 							"type": "text"
 						}
 					]
@@ -287,7 +350,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "1"
+							"value": "53"
 						}
 					]
 				}
