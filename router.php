@@ -1,7 +1,9 @@
 <?php
 use Steampixel\Route;
+use zikju\Shared\Http\AccessGuard;
 use zikju\Shared\Http\Response;
 
+$accessGuard = new AccessGuard();
 
 /**
  * ---------------------------------------
@@ -30,34 +32,36 @@ Route::add('/auth/refresh-token', function() {
  * ---------------------------------------
  */
 // Create user
-Route::add('/users', function() use ($access) {
-    $access->verifyAccessToken();
-    $access->adminOnly();
+Route::add('/users', function() use ($accessGuard) {
+    $accessGuard->verifyAccessToken();
+    $accessGuard->allowAdminOnly();
     (new zikju\App\User\UserController())->createUser();
 }, 'post');
 
 // Get user by id
-Route::add('/users/([0-9]*)', function($id) use ($access) {
-    $access->verifyAccessToken();
+Route::add('/users/([0-9]*)', function($id) use ($accessGuard) {
+    $accessGuard->verifyAccessToken();
     (new zikju\App\User\UserController())->getUser($id);
 }, 'get');
 
 // Delete user
-Route::add('/users/([0-9]*)', function($id) use ($access) {
-    $access->verifyAccessToken();
-    $access->adminOnly();
+Route::add('/users/([0-9]*)', function($id) use ($accessGuard) {
+    $accessGuard->verifyAccessToken();
+    $accessGuard->allowAdminOnly();
     (new zikju\App\User\UserController())->deleteUser($id);
 }, 'delete');
 
 // Edit user Core data by id
-Route::add('/users/([0-9]*)/edit', function($id) {
-    // TODO: check role access
+Route::add('/users/([0-9]*)/edit', function($id) use ($accessGuard) {
+    $accessGuard->verifyAccessToken();
+    $accessGuard->allowAdminOnly();
     (new zikju\App\User\UserController())->editUserCoreData($id);
 }, 'put');
 
 // Edit user Email
-Route::add('/users/([0-9]*)/edit/email', function($id) {
-    // TODO: check role access
+Route::add('/users/([0-9]*)/edit/email', function($id) use ($accessGuard) {
+    $accessGuard->verifyAccessToken();
+    $accessGuard->allowAdminOnly();
     (new zikju\App\User\UserController())->editUserEmail($id);
 }, 'put');
 
