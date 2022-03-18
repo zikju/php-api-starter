@@ -1,6 +1,14 @@
 <?php
 use Steampixel\Route;
+use zikju\Shared\Http\AccessGuard;
+use zikju\Shared\Logger\UserLogger;
 use zikju\Shared\Http\Response;
+
+$accessGuard = new AccessGuard();
+
+// Log into database user last access time
+UserLogger::logLastAccess();
+
 
 
 /**
