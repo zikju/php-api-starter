@@ -28,6 +28,7 @@ _Loads environment variables from `.env` to `getenv()`, `$_ENV` and `$_SERVER` a
 * JWT Token Authentication
 * JWT Refresh Tokens
 * Users management
+* Role-based routes protection (user, admin)
 * More to come...
 
 # Installation
